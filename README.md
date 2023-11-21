@@ -34,16 +34,6 @@ Set drop down to show 'All Sites' so it works on any site.
 
 Press 'Save shortcuts'.
 
-## Opening the Team Selector
-
-Go to another site and make sure you have refreshed the page after saving the shortcut.
-
-Press your chosen shortcut.
-
-A modal will open showing the FireHawk Team Selector.
-
-Search for your desired team and press enter or click the button next to the site to open.
-
 ## Copying from fields
 
 Go to another site and make sure you have refreshed the page after saving the shortcut.
