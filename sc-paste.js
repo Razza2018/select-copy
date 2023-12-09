@@ -80,11 +80,19 @@ if (!roh_sc_fieldClicked) {
   async function pasteFromClipboard(selectedFields) {
     let clipboardContent = await navigator.clipboard.readText();
     let values = JSON.parse(clipboardContent);
+    let focusEvent = new Event('focus');
+    let inputEvent = new Event('input');
+    let changeEvent = new Event('change');
+    let blurEvent = new Event('blur');
 
     if (Array.isArray(values)) {
       if (values.length === selectedFields.length) {
         for (let i = 0; i < selectedFields.length; i++) {
+          selectedFields[i].dispatchEvent(focusEvent);
           selectedFields[i].value = values[i];
+          selectedFields[i].dispatchEvent(inputEvent);
+          selectedFields[i].dispatchEvent(changeEvent);
+          selectedFields[i].dispatchEvent(blurEvent);
         }
       }
     }
