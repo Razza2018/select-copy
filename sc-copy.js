@@ -34,6 +34,8 @@ if (!roh_sc_fieldClicked) {
   }
 
   function load(head, body, fields) {
+    addFixedDivClasses();
+
     let style = document.createElement('style');
     style.className = 'roh-sc-style';
     style.innerHTML = loadCss();
@@ -48,6 +50,7 @@ if (!roh_sc_fieldClicked) {
 
   function unload(head, body, fields) {
     removeSelection(roh_sc_selectedFields);
+    removeFixedDivClasses();
 
     let style = document.getElementsByClassName('roh-sc-style')[0];
     head.removeChild(style);
@@ -71,14 +74,34 @@ if (!roh_sc_fieldClicked) {
         z-index: 500000;
       }
 
-      input,
-      textarea {
+      .roh-sc-fixed-div {
         z-index: 500001 !important;
-        cursor: pointer;
+        background-color: #fff !important;
+        border-color: hsl(0deg 0% 40%) !important;
+      }
+
+      .roh-sc-fixed-div::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: #000;
+        opacity: 0.5;
+      }
+
+      input[type=text],
+      input[type=number],
+      input:not([type]),
+      textarea {
+        position: relative !important;
+        z-index: 500002 !important;
+        cursor: pointer !important;
       }
 
       .roh-sc-selected {
-        background-color: #ffaa00;
+        background-color: #ffaa00 !important;
       }
     `.trim();
   }
@@ -105,6 +128,33 @@ if (!roh_sc_fieldClicked) {
   function removeEventListeners(fields) {
     for (let field of fields) {
       field.removeEventListener('mousedown', roh_sc_fieldClicked);
+    }
+  }
+
+  function addFixedDivClasses() {
+    let elements = document.getElementsByTagName('div');
+
+    for (let element of elements) {
+      if (getComputedStyle(element).getPropertyValue('position') === 'fixed') {
+        element.classList.add('roh-sc-fixed-div');
+
+        let cover = document.createElement('div');
+        cover.className = 'roh-sc-fixed-div-cover';
+        element.parentElement.appendChild(cover);
+      }
+    }
+  }
+
+  function removeFixedDivClasses() {
+    let elements = Object.assign([], document.getElementsByClassName('roh-sc-fixed-div'));
+    let coverElements = Object.assign([], document.getElementsByClassName('roh-sc-fixed-div-cover'));
+
+    for (let element of elements) {
+      element.classList.remove('roh-sc-fixed-div');
+    }
+
+    for (let element of coverElements) {
+      element.parentElement.removeChild(element);
     }
   }
 
