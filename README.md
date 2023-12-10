@@ -2,6 +2,8 @@
 
 Select Copy allows you to select multiple input or textarea fields and copy them to the clipboard. You can then select multiple input or textarea fields to past them to which will paste from the clipboard.
 
+Clipboard data is formatted as an array of strings. `["Field 1","Field 2","Field 3"]`
+
 Two different shortcuts will need to be created, one for initialising the copy and another for initialising the paste.
 
 ## Install
